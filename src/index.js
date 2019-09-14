@@ -114,7 +114,7 @@ class BraintreeDropIn extends React.Component {
   handleSubmit = (event) => {
     if (this.state.dropInInstance && !this.state.isSubmitButtonDisabled) {
       this.setState({isSubmitButtonDisabled: true}, () => {
-        this.state.dropInInstance.requestPaymentMethod((err, payload) => {
+        this.state.dropInInstance.requestPaymentMethod({ ...this.props.requestPaymentOptions }, (err, payload) => {
           this.setState({
             isSubmitButtonDisabled: false
           })
@@ -149,6 +149,7 @@ class BraintreeDropIn extends React.Component {
 BraintreeDropIn.propTypes = {
   braintree: PropTypes.object.isRequired,
   options: PropTypes.object,
+  requestPaymentOptions: PropTypes.object,
   authorizationToken: PropTypes.string.isRequired,
   handlePaymentMethod: PropTypes.func.isRequired,
   onCreate: PropTypes.func,
@@ -177,7 +178,8 @@ const renderSubmitButton = ({onClick, isDisabled, text}) => {
 renderSubmitButton.propTypes = {
   onClick: PropTypes.func.isRequired,
   isDisabled: PropTypes.bool.isRequired,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
+  requestPaymentOptions: {}
 }
 
 BraintreeDropIn.defaultProps = {
